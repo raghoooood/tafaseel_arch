@@ -1,55 +1,89 @@
 "use client";
 
 import { useForm, Controller } from "react-hook-form";
-import { yupResolver } from "@hookform/resolvers/yup";
-import * as yup from "yup";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { z } from "zod";
 import PhoneInput from "react-phone-input-2";
-import 'react-phone-input-2/lib/style.css';
+import "react-phone-input-2/lib/style.css";
 
-interface IFormInputs {
-  projectType: string;
-  emirate: string;
-  firstName: string;
-  phoneNumber: string;
-  email?: string;
-  file?: FileList | null;
-}
-
-const schema = yup.object({
-  projectType: yup.string().required("Project type is required"),
-  emirate: yup.string().required("Emirate is required"),
-  firstName: yup.string().required("Name is required"),
-  phoneNumber: yup.string().required("Phone number is required"),
-  email: yup.string().email().notRequired(),
-  file: yup.mixed().notRequired(),
+// ---------------------------
+//  ZOD SCHEMA
+// ---------------------------
+const contactSchema = z.object({
+  projectType: z
+    .string()
+    .min(1, "Please select your project type."),
+  emirate: z
+    .string()
+    .min(1, "Please select your emirate."),
+  firstName: z
+    .string()
+    .min(1, "Your name is required."),
+  phoneNumber: z
+    .string()
+    .min(1, "A valid phone number is required."),
+  email: z
+    .string()
+    .email("Please enter a valid email address.")
+    .optional()
+    .or(z.literal("")), // allow empty string as "no email"
+  file: z
+    .any()
+    .optional()
+    .refine(
+      (files) => {
+        if (!files || files.length === 0) return true; // optional
+        return files[0].size <= 20 * 1024 * 1024; // 20MB
+      },
+      { message: "Max file size is 20MB." }
+    ),
 });
 
+// 🔄 Type inferred from schema – always in sync
+type ContactFormValues = z.infer<typeof contactSchema>;
+
+// ---------------------------
+//  COMPONENT
+// ---------------------------
 export default function ContactForm() {
-  const { register, handleSubmit, control, formState: { errors } } = useForm<IFormInputs>({
-    resolver: yupResolver(schema),
+  const {
+    register,
+    handleSubmit,
+    control,
+    reset,
+    formState: { errors },
+  } = useForm<ContactFormValues>({
+    resolver: zodResolver(contactSchema),
   });
 
-  const onSubmit = (data: IFormInputs) => {
+  const onSubmit = (data: ContactFormValues) => {
     console.log("FORM SUBMITTED:", data);
+    // TODO: send to backend / email / WhatsApp etc.
+    reset();
   };
 
   return (
-    <form onSubmit={handleSubmit(onSubmit)} className="space-y-6 bg-white p-6 md:p-8 rounded-xl shadow-lg border">
-
-      {/* Title */}
-      <h2 className="text-3xl font-semibold text-gray-900 leading-tight">
-        Get your consulting services from MatsMall
+    <form
+      onSubmit={handleSubmit(onSubmit)}
+      className="
+        space-y-6 bg-white p-6 md:p-8 
+        rounded-2xl shadow-xl border border-gold-light
+      "
+    >
+      {/* TITLE */}
+      <h2 className="text-3xl font-montserrat font-bold text-charcoal leading-tight">
+        Get Your Professional Consultation
       </h2>
+      <p className="text-textMuted font-poppins">
+        Share your project details and our team will contact you shortly.
+      </p>
 
-      {/* Project Type */}
+      {/* PROJECT TYPE */}
       <div>
-        <label className="block font-medium mb-1 text-gray-700">
-          Your project type <span className="text-red-500">(Required)</span>
+        <label className="form-label">
+          Project Type <span className="text-red-500">*</span>
         </label>
-        <select
-          {...register("projectType")}
-          className="border border-gray-300 rounded-lg p-3 w-full bg-white text-black focus:ring-2 focus:ring-black focus:outline-none transition"
-        >
+        <select {...register("projectType")} className="form-input">
           <option value="">Select project type</option>
           <option>Private Villa</option>
           <option>Villa in a residential complex / apartment</option>
@@ -57,19 +91,16 @@ export default function ContactForm() {
           <option>Shop / Restaurant / Salon / Office</option>
         </select>
         {errors.projectType && (
-          <p className="text-red-500 text-sm mt-1">{errors.projectType.message}</p>
+          <p className="form-error">{errors.projectType.message}</p>
         )}
       </div>
 
-      {/* Emirate */}
+      {/* EMIRATE */}
       <div>
-        <label className="block font-medium mb-1 text-gray-700">
-          In which emirate is your house located <span className="text-red-500">(Required)</span>
+        <label className="form-label">
+          Emirate <span className="text-red-500">*</span>
         </label>
-        <select
-          {...register("emirate")}
-          className="border border-gray-300 rounded-lg p-3 w-full bg-white text-black focus:ring-2 focus:ring-black focus:outline-none transition"
-        >
+        <select {...register("emirate")} className="form-input">
           <option value="">Select emirate</option>
           <option>Abu Dhabi</option>
           <option>Dubai</option>
@@ -80,30 +111,30 @@ export default function ContactForm() {
           <option>Umm Al Quwain</option>
         </select>
         {errors.emirate && (
-          <p className="text-red-500 text-sm mt-1">{errors.emirate.message}</p>
+          <p className="form-error">{errors.emirate.message}</p>
         )}
       </div>
 
-      {/* Name */}
+      {/* NAME */}
       <div>
-        <label className="block font-medium mb-1 text-black">
-          Name <span className="text-red-500">(Required)</span>
+        <label className="form-label">
+          Name <span className="text-red-500">*</span>
         </label>
         <input
           {...register("firstName")}
           type="text"
           placeholder="Enter your name"
-          className="border border-gray-300 text-black rounded-lg p-3 w-full bg-white focus:ring-2 focus:ring-black focus:outline-none transition"
+          className="form-input"
         />
         {errors.firstName && (
-          <p className="text-red-500 text-sm mt-1">{errors.firstName.message}</p>
+          <p className="form-error">{errors.firstName.message}</p>
         )}
       </div>
 
-      {/* Phone */}
+      {/* PHONE */}
       <div>
-        <label className="block font-medium mb-1 text-black">
-          Mobile Number <span className="text-red-500">(Required)</span>
+        <label className="form-label">
+          Mobile Number <span className="text-red-500">*</span>
         </label>
         <Controller
           name="phoneNumber"
@@ -111,49 +142,55 @@ export default function ContactForm() {
           render={({ field }) => (
             <PhoneInput
               {...field}
-              country={"ae"} // default country
+              country={"ae"}
               enableSearch
-              inputClass="w-full text-black border border-gray-300 rounded-lg p-3 focus:ring-2 focus:ring-black focus:outline-none transition"
-              buttonClass="border border-gray-300 text-gray-700"
               placeholder="Enter phone number"
+              inputClass="!w-full !form-input !pl-12 !text-black"
+              buttonClass="!border-gray-300"
             />
           )}
         />
         {errors.phoneNumber && (
-          <p className="text-red-500 text-sm mt-1">{errors.phoneNumber.message}</p>
+          <p className="form-error">{errors.phoneNumber.message}</p>
         )}
       </div>
 
-      {/* Email */}
+      {/* EMAIL */}
       <div>
-        <label className="block font-medium mb-1 text-gray-700">Email</label>
+        <label className="form-label">Email (Optional)</label>
         <input
           {...register("email")}
-          placeholder="example@example.com"
-          className="border border-gray-300 text-black rounded-lg p-3 w-full bg-white focus:ring-2 focus:ring-black focus:outline-none transition"
+          type="email"
+          placeholder="example@email.com"
+          className="form-input"
         />
         {errors.email && (
-          <p className="text-red-500 text-sm mt-1">{errors.email.message}</p>
+          <p className="form-error">{errors.email.message}</p>
         )}
       </div>
 
-      {/* File Upload */}
+      {/* FILE UPLOAD */}
       <div>
-        <label className="block font-medium mb-1 text-gray-700">Upload Arch</label>
+        <label className="form-label">
+          Upload Drawing / Document (Optional)
+        </label>
         <input
           type="file"
           {...register("file")}
-          className="w-full text-gray-600"
+          className="text-sm text-gray-700"
         />
-        <p className="text-xs text-gray-500 mt-1">Max file size: 500 MB</p>
+        {errors.file && (
+          <p className="form-error">{errors.file.message as string}</p>
+        )}
+        <p className="text-xs text-gray-400 mt-1">Max size: 20MB</p>
       </div>
 
-      {/* Submit Button */}
+      {/* SUBMIT */}
       <button
         type="submit"
-        className="w-full bg-black text-white py-3 rounded-lg text-lg font-medium hover:bg-gray-900 active:scale-95 transition"
+        className="btn-gold w-full py-3 text-lg font-semibold"
       >
-        Submit
+        Submit Request
       </button>
     </form>
   );
