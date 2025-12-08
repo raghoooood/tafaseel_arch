@@ -21,7 +21,7 @@ const Footer = () => {
           <div>
             <div className="flex justify-center md:justify-start mb-6">
               <Image
-                src="/img/logo.webp"
+                src="/logo.svg"
                 alt="Tafaseel Logo"
                 width={220}
                 height={90}
