@@ -80,7 +80,7 @@ const Hero = () => {
             <span className="text-gold">Modern & Stylish</span>
           </h1>
 
-          <p className="text-gray-10 text-body text-sm sm:text-base md:text-lg mb-8">
+          <p className="text-gray-600 text-body text-sm sm:text-base md:text-lg mb-8">
             Transform your living space with our award-winning interior design
             solutions. We merge beauty, comfort, and luxury functionality.
           </p>

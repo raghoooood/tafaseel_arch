@@ -27,14 +27,15 @@ const Navbar = () => {
 
   return (
     <nav
-      className="
-        sticky top-0 z-50 w-full px-6 py-4
+     className="
+        sticky top-0 z-[500]  // <— safe but far below modal
+        w-full px-6 py-4
         backdrop-blur-xl bg-white/70
         border-b border-gold-light/30
         shadow-[0_4px_30px_rgba(0,0,0,0.04)]
         flex items-center justify-between
-      "
-    >
+">
+
       {/* LOGO */}
       <Link href="/">
         <Image
@@ -162,16 +163,7 @@ const Navbar = () => {
               Contact Us
             </Link>
 
-            <Link
-              href="/list"
-              onClick={() => setOpen(false)}
-              className="
-                px-4 py-2 border border-gold-light rounded-lg text-sm w-full text-center
-                hover:bg-gold-light/20 transition-all
-              "
-            >
-              List Property
-            </Link>
+            
           </div>
         </div>
       </div>
