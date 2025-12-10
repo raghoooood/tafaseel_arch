@@ -90,8 +90,8 @@ const Footer = () => {
 
               <div className="flex items-center">
                 <FaEnvelope className="text-gold text-lg" />
-                <a href="mailto:info@tafaseel.com" className="ml-3 hover:text-gold transition">
-                  info@tafaseel.com
+                <a href="mailto:info@tafaseelarch.com" className="ml-3 hover:text-gold transition">
+                  info@tafaseelarch.com
                 </a>
               </div>
 

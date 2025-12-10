@@ -68,10 +68,10 @@ export default function ContactPage() {
               <div>
                 <h4 className="text-gold font-semibold text-xl">Email</h4>
                 <a
-                  href="mailto:info@tafaseel.com"
+                  href="mailto:info@tafaseelarch.com"
                   className="text-charcoal hover:text-gold transition"
                 >
-                  info@tafaseel.com
+                  info@tafaseelarch.com
                 </a>
               </div>
             </div>
