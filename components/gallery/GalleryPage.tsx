@@ -30,21 +30,26 @@ const GalleryPage: React.FC = () => {
     const [projects, setProjects] = useState<Project[]>([]);
 
 
-  useEffect(() => {
-    fetchProjectsByCategory(selectedCategory)
-      .then((data) => {
-        setProjects(data);
-        // Transform backend projects to GalleryImage format
-        const galleryImages: GalleryImage[] = data.map((proj: any, index: number) => ({
-          id: index, // GalleryImage expects number
-          src: proj.images.backgroundImage, // replace with your project image field
+ useEffect(() => {
+  fetchProjectsByCategory(selectedCategory)
+    .then((data) => {
+      setProjects(data);
+
+      // Flatten all images from all projects
+      const galleryImages: GalleryImage[] = data.flatMap((proj, projIndex) => 
+        proj.images.projectImages.map((imgSrc, imgIndex) => ({
+          id: projIndex * 1000 + imgIndex, // unique id
+          src: imgSrc,                     // each image URL
           alt: proj.name,
           category: proj.category,
-        }));
+        }))
+      );
 
-        setImages(galleryImages);
-      });
-  }, [selectedCategory]);
+      setImages(galleryImages);
+    })
+    .catch((err) => console.error(err));
+}, [selectedCategory]);
+
 
 
       
@@ -52,7 +57,7 @@ const GalleryPage: React.FC = () => {
   const handleCloseLightbox = () => setLightboxImage(null);
 
   return (
-    <div className="max-w-7xl mx-auto pt-20 pb-24 px-6">
+    <div className="max-w-7xl mx-auto pt-20 pb-24 px-6" suppressHydrationWarning={true}>
       <div className="text-center mb-14">
         <h1 className="font-montserrat font-bold text-charcoal text-4xl md:text-5xl tracking-tight">
           Tafaseel Project Gallery
