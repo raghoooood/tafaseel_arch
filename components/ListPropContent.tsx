@@ -70,7 +70,7 @@ const ListPropContent = () => {
             },
           }}
           className="
-            flex gap-8 overflow-x-auto overflow-y-visible hide-scrollbar py-6
+            flex gap-8 overflow-x-auto overflow-y-visible hide-scrollbar py-6 w-full
           "
         >
           {listingPropSteps.map((step, index) => {

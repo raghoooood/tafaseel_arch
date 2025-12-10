@@ -9,7 +9,7 @@ interface ContainerProps {
 const Container = ({children} : ContainerProps) => {
   return (
     <div className="
-      max-w-[2800px] 
+      max-w-[2500px] 
       mx-auto
       py-8
       

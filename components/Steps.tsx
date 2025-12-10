@@ -24,9 +24,8 @@ const Steps = () => {
               We believe that true beauty begins in the smallest details that make the biggest
               difference. We transform ideas into spaces that radiate elegance and harmony,
               blending modern innovation with Arabic identity to reflect your personality
-              and tell your story through design.
-              Our team combines creative vision with technical precision —
-              delivering an exceptional journey from concept to handover.
+              and tell your story through design. Our team combines creative vision with
+              technical precision — delivering an exceptional journey from concept to handover.
             </p>
           </div>
 
@@ -48,9 +47,11 @@ const Steps = () => {
 
         </div>
 
-        {/* STEPS CONTENT */}
-        <div className="mt-24">
-          <ListPropContent />
+        {/* STEPS CONTENT — FIXED + CENTERED */}
+        <div className="mt-24 flex justify-center w-full">
+          <div className="w-full max-w-7xl">
+            <ListPropContent />
+          </div>
         </div>
 
       </div>

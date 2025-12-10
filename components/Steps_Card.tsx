@@ -41,11 +41,11 @@ const Steps_Card: React.FC<StepCardProps> = ({
       className="
         relative flex flex-col justify-between
         bg-white rounded-3xl 
-        px-7 py-10
+        px-7 py-7
         shadow-md hover:shadow-xl
         border border-gold-light/30 hover:border-gold
         transition-all duration-300
-        w-[300px] h-[320px]
+        w-[300px] h-[250px]
         overflow-visible
       "
     >
@@ -62,12 +62,12 @@ const Steps_Card: React.FC<StepCardProps> = ({
       </div>
 
       {/* Card Content */}
-      <div className="pt-20">
-        <p className="font-montserrat text-gold text-xs tracking-wide mb-3">
+      <div className="pt-16">
+        <p className="font-montserrat font-semibold  text-gold text-xs tracking-wide mb-3">
           {step_number}
         </p>
 
-        <h3 className="font-montserrat font-semibold text-charcoal text-xl leading-snug">
+        <h3 className="font-montserrat font-bold text-charcoal text-xl leading-snug">
           {title}
         </h3>
 

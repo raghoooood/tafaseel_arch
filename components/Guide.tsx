@@ -1,6 +1,9 @@
-import Image from 'next/image';
-import React from 'react';
-import { FaCubes, FaHardHat, FaPaintBrush, FaRulerCombined } from 'react-icons/fa';
+"use client";
+
+import Image from "next/image";
+import React from "react";
+import { motion, Variants } from "framer-motion";
+import { FaCubes, FaHardHat, FaPaintBrush, FaRulerCombined } from "react-icons/fa";
 
 const servicesData = [
   {
@@ -21,6 +24,29 @@ const servicesData = [
   },
 ];
 
+// Motion variants
+const containerVariants: Variants = {
+  hidden: {},
+  show: {
+    transition: {
+      staggerChildren: 0.15,
+    },
+  },
+};
+
+const cardVariants: Variants = {
+  hidden: { opacity: 0, y: 35, scale: 0.95 },
+  show: {
+    opacity: 1,
+    y: 0,
+    scale: 1,
+    transition: {
+      duration: 0.7,
+      ease: [0.25, 0.1, 0.25, 1],
+    },
+  },
+};
+
 const Guide = () => {
   return (
     <section className="max-container padding-container w-full py-20">
@@ -28,7 +54,7 @@ const Guide = () => {
       {/* TOP GRID SECTION */}
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-start">
 
-        {/* LEFT SIDE – DESCRIPTION */}
+        {/* LEFT SIDE – TEXT */}
         <div>
           <p className="uppercase tracking-[0.2em] font-montserrat text-gold-light mb-4 text-sm">
             Where Art Lives in Every Detail
@@ -39,43 +65,61 @@ const Guide = () => {
           </h2>
 
           <p className="font-poppins text-textMuted text-lg leading-relaxed">
-            We believe that true beauty begins in the smallest details that make 
-            the biggest difference. We transform ideas into spaces that radiate 
-            elegance and harmony, blending modern innovation with Arabic identity 
-            to reflect your personality and tell your story through design.  
-            Our architects and designers combine vision with precision to deliver 
-            an exceptional journey — from the first concept to the final handover.
+            We believe that true beauty begins in the smallest details that make the biggest
+            difference. We transform ideas into spaces that radiate elegance and harmony,
+            blending modern innovation with Arabic identity to reflect your personality.
+            Our architects and designers combine vision with precision to deliver an
+            exceptional journey — from the first concept to the final handover.
           </p>
         </div>
 
-        {/* RIGHT SIDE – SERVICES */}
-        <div className="grid grid-cols-2 gap-8 p-2 sm:p-4">
+        {/* RIGHT SIDE – SERVICE CARDS WITH MOTION */}
+        <motion.div
+          variants={containerVariants}
+          initial="hidden"
+          whileInView="show"
+          viewport={{ once: true, amount: 0.3 }}
+          className="grid grid-cols-2 gap-8 p-2 sm:p-4"
+        >
           {servicesData.map((service, index) => (
-            <div
+            <motion.div
               key={index}
+              variants={cardVariants}
+              whileHover={{
+                y: -8,
+                rotateX: 4,
+                rotateY: -4,
+                boxShadow: "0px 20px 40px rgba(0,0,0,0.12)",
+                transition: { type: "spring", stiffness: 150, damping: 12 },
+              }}
               className="
                 p-6 bg-white rounded-2xl shadow-md border border-gold-light/30
-                hover:shadow-xl hover:border-gold hover:-translate-y-2
-                transition-all duration-500
+                hover:border-gold transition-all duration-500
+                group relative overflow-hidden
               "
             >
+              {/* Glow layer */}
+              <motion.div
+                className="absolute inset-0 pointer-events-none opacity-0 group-hover:opacity-20 transition bg-gold"
+              />
+
               {/* Icon */}
               <div
                 className="
                   w-16 h-16 flex items-center justify-center rounded-2xl mb-4 
-                  bg-gold/10 hover:bg-gold/20 transition duration-300
+                  bg-gold/10 group-hover:bg-gold/20 transition duration-300
                 "
               >
                 {service.icon}
               </div>
 
               {/* Title */}
-              <h3 className="font-montserrat font-semibold text-charcoal text-lg tracking-wide">
+              <h3 className="font-montserrat font-semibold text-charcoal group-hover:text-gold text-lg tracking-wide transition">
                 {service.title}
               </h3>
-            </div>
+            </motion.div>
           ))}
-        </div>
+        </motion.div>
 
       </div>
 
@@ -89,9 +133,7 @@ const Guide = () => {
             alt="interior"
             width={1440}
             height={580}
-            className="
-              w-full object-cover object-center 2xl:rounded-5xl shadow-2xl
-            "
+            className="w-full object-cover object-center 2xl:rounded-5xl shadow-2xl"
           />
         </div>
 
@@ -122,9 +164,7 @@ const Guide = () => {
             />
 
             <div>
-              <p className="font-poppins text-textMuted text-sm">
-                Project Timeline
-              </p>
+              <p className="font-poppins text-textMuted text-sm">Project Timeline</p>
               <p className="font-montserrat font-semibold text-gold mt-1 text-lg">
                 6–12 Weeks
               </p>
