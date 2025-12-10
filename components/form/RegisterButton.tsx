@@ -46,7 +46,7 @@ const RegisterButton = () => {
           onClick={(e) => e.stopPropagation()}
           className="
             relative bg-white rounded-2xl shadow-2xl
-            w-full max-w-4xl max-h-[90vh] overflow-y-auto p-5 sm:p-8
+            w-full max-w-7xl max-h-[90vh] overflow-y-auto p-5 sm:p-8
           "
           initial={{ opacity: 0, y: 40, scale: 0.95 }}
           animate={{ opacity: 1, y: 0, scale: 1 }}
@@ -75,7 +75,7 @@ const RegisterButton = () => {
 
             <div className="hidden lg:block rounded-xl overflow-hidden shadow-md">
               <Image
-                src="/images/register.jpg"
+                src="/images/interior1.jpg"
                 alt="Consultation"
                 width={700}
                 height={700}

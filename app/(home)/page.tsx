@@ -5,6 +5,7 @@ import Guide from "@/components/Guide";
 import Hero from "@/components/Hero";
 import Steps from "@/components/Steps";
 import TestimonialContainer from "@/components/testimonial/TestimonialContainer";
+import TeamStats from "@/components/team/TeamStats";
 
 export default function Home() {
   return (
@@ -14,6 +15,8 @@ export default function Home() {
       <Guide />
       <Steps/>
       <Features />
+      <TeamStats />
+
       <StartProjectCTA />
       <TestimonialContainer/>
     </>

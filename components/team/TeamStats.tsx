@@ -93,21 +93,87 @@ export default function TeamStats() {
         viewport={{ once: true }}
         className="grid md:grid-cols-2 gap-12 mt-24"
       >
-        {/* ENGINEERING CARD */}
-        <motion.div
-          variants={fadeUp}
-          className="bg-white p-10 rounded-3xl shadow-xl border border-gold-light/40
-                 hover:shadow-2xl hover:-translate-y-2 transition-all duration-500"
+{/* ENGINEERING CARD */}
+<motion.div
+  variants={fadeUp}
+  className="bg-white p-10 rounded-3xl shadow-xl border border-gold-light/40
+             hover:shadow-2xl hover:-translate-y-2 transition-all duration-500"
+>
+  <h3 className="text-2xl font-semibold font-montserrat text-gold mb-8 text-center">
+    Engineering Team
+  </h3>
+
+  <div className="grid grid-cols-1 sm:grid-cols-3 gap-10 text-center">
+
+    {/* ARCHITECTURAL */}
+    <motion.div
+      whileHover={{ scale: 1.08 }}
+      transition={{ type: "spring", stiffness: 180 }}
+      className="flex flex-col items-center"
+    >
+      <div className="w-20 h-20 bg-gold/10 rounded-2xl flex items-center justify-center mb-4 shadow-md">
+        <svg
+          className="w-10 h-10 text-gold"
+          fill="none"
+          stroke="currentColor"
+          strokeWidth="1.5"
+          viewBox="0 0 24 24"
         >
-          <h3 className="text-2xl font-semibold font-montserrat text-gold mb-5">
-            Engineering Team
-          </h3>
-          <ul className="space-y-3 text-lg text-charcoal leading-relaxed">
-            <li>• Architectural Engineering</li>
-            <li>• Interior Design Engineering</li>
-            <li>• Civil Engineering</li>
-          </ul>
-        </motion.div>
+          <path d="M3 21h18M3 10l9-7 9 7M9 21v-6h6v6" />
+        </svg>
+      </div>
+      <p className="font-montserrat font-medium text-charcoal">
+        Architectural Engineering
+      </p>
+    </motion.div>
+
+    {/* INTERIOR DESIGN */}
+    <motion.div
+      whileHover={{ scale: 1.08 }}
+      transition={{ type: "spring", stiffness: 180 }}
+      className="flex flex-col items-center"
+    >
+      <div className="w-20 h-20 bg-gold/10 rounded-2xl flex items-center justify-center mb-4 shadow-md">
+        <svg
+          className="w-10 h-10 text-gold"
+          fill="none"
+          stroke="currentColor"
+          strokeWidth="1.5"
+          viewBox="0 0 24 24"
+        >
+          <path d="M4 3h16M4 21h16M4 3v18M20 3v18M8 7h8M8 12h8M8 17h8" />
+        </svg>
+      </div>
+      <p className="font-montserrat font-medium text-charcoal">
+        Interior Design Engineering
+      </p>
+    </motion.div>
+
+    {/* CIVIL ENGINEERING */}
+    <motion.div
+      whileHover={{ scale: 1.08 }}
+      transition={{ type: "spring", stiffness: 180 }}
+      className="flex flex-col items-center"
+    >
+      <div className="w-20 h-20 bg-gold/10 rounded-2xl flex items-center justify-center mb-4 shadow-md">
+        <svg
+          className="w-10 h-10 text-gold"
+          fill="none"
+          stroke="currentColor"
+          strokeWidth="1.5"
+          viewBox="0 0 24 24"
+        >
+          <path d="M3 17l9-14 9 14H3zm2 4h14" />
+        </svg>
+      </div>
+      <p className="font-montserrat font-medium text-charcoal">
+        Civil Engineering
+      </p>
+    </motion.div>
+
+  </div>
+</motion.div>
+
 
         {/* EXECUTION CARD */}
         <motion.div
