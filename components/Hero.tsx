@@ -40,10 +40,10 @@ const Hero = () => {
   const mainSwiperRef = useRef<SwiperType | null>(null);
 
   const slides = [
-    "/images/interior1.webp",
-    "/images/interior2.webp",
-    "/images/interior3.webp",
-    "/images/interior4.webp",
+    "/images/interior1.jpg",
+    "/images/interior2.jpg",
+    "/images/interior3.jpg",
+    "/images/interior4.jpg",
   ];
 
   const handleThumbClick = (index: number) => {
