@@ -20,7 +20,7 @@ export const fetchProjectsByCategory = async (category: string = "All"): Promise
   queryParams.append("_start", "0");
   queryParams.append("_end", "50");
 
-  const res = await fetch(`http://localhost:8080/api/v1/projects?${queryParams.toString()}`, {
+  const res = await fetch(`https://tafaseel-project.onrender.com/api/v1/projects?${queryParams.toString()}`, {
     cache: "no-store", // always fetch fresh data
   });
 

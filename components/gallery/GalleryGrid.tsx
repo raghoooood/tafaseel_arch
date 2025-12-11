@@ -12,9 +12,7 @@ const GalleryGrid: React.FC<GalleryGridProps> = ({ images, onImageClick }) => {
     <div
       className="
         columns-1 sm:columns-2 md:columns-3 lg:columns-4 
-        gap-6 
-        space-y-6 
-        animate-fadeIn
+        gap-6 space-y-6 animate-fadeIn
       "
     >
       {images.map((img) => (
