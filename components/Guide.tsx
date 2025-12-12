@@ -24,38 +24,71 @@ const servicesData = [
   },
 ];
 
-// Motion variants
-const containerVariants: Variants = {
-  hidden: {},
+/* =======================
+✨ MOTION VARIANTS
+======================= */
+
+const fadeUp: Variants = {
+  hidden: { opacity: 0, y: 35 },
   show: {
-    transition: {
-      staggerChildren: 0.15,
-    },
-  },
+    opacity: 1,
+    y: 0,
+    transition: { duration: 0.8, ease: [0.25, 0.1, 0.25, 1] }
+  }
 };
 
-const cardVariants: Variants = {
-  hidden: { opacity: 0, y: 35, scale: 0.95 },
+const staggerContainer: Variants = {
+  hidden: {},
+  show: {
+    transition: { staggerChildren: 0.18 }
+  }
+};
+
+const cardVariant: Variants = {
+  hidden: { opacity: 0, y: 40, scale: 0.95 },
   show: {
     opacity: 1,
     y: 0,
     scale: 1,
-    transition: {
-      duration: 0.7,
-      ease: [0.25, 0.1, 0.25, 1],
-    },
-  },
+    transition: { duration: 0.7, ease: "easeOut" }
+  }
 };
+
+const fadeImage: Variants = {
+  hidden: { opacity: 0, scale: 1.1 },
+  show: {
+    opacity: 1,
+    scale: 1,
+    transition: { duration: 1, ease: "easeOut" }
+  }
+};
+
+const floatCard: Variants = {
+  hidden: { opacity: 0, y: 30 },
+  show: {
+    opacity: 1,
+    y: 0,
+    transition: { duration: 0.9, ease: "easeOut", delay: 0.3 }
+  }
+};
+
+/* =======================
+✨ COMPONENT
+======================= */
 
 const Guide = () => {
   return (
     <section className="max-container padding-container w-full py-20">
 
-      {/* TOP GRID SECTION */}
+      {/* ================= LEFT TEXT SECTION ================= */}
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-start">
 
-        {/* LEFT SIDE – TEXT */}
-        <div>
+        <motion.div
+          variants={fadeUp}
+          initial="hidden"
+          whileInView="show"
+          viewport={{ once: true }}
+        >
           <p className="uppercase tracking-[0.2em] font-montserrat text-gold-light mb-4 text-sm">
             Where Art Lives in Every Detail
           </p>
@@ -71,11 +104,11 @@ const Guide = () => {
             Our architects and designers combine vision with precision to deliver an
             exceptional journey — from the first concept to the final handover.
           </p>
-        </div>
+        </motion.div>
 
-        {/* RIGHT SIDE – SERVICE CARDS WITH MOTION */}
+        {/* ================= SERVICE CARDS ================= */}
         <motion.div
-          variants={containerVariants}
+          variants={staggerContainer}
           initial="hidden"
           whileInView="show"
           viewport={{ once: true, amount: 0.3 }}
@@ -84,23 +117,24 @@ const Guide = () => {
           {servicesData.map((service, index) => (
             <motion.div
               key={index}
-              variants={cardVariants}
+              variants={cardVariant}
               whileHover={{
-                y: -8,
-                rotateX: 4,
-                rotateY: -4,
-                boxShadow: "0px 20px 40px rgba(0,0,0,0.12)",
-                transition: { type: "spring", stiffness: 150, damping: 12 },
+                y: -10,
+                scale: 1.04,
+                rotateX: 6,
+                rotateY: -6,
+                boxShadow: "0 25px 50px rgba(0,0,0,0.18)",
+                transition: { type: "spring", stiffness: 200, damping: 12 }
               }}
               className="
                 p-6 bg-white rounded-2xl shadow-md border border-gold-light/30
                 hover:border-gold transition-all duration-500
-                group relative overflow-hidden
+                relative group overflow-hidden
               "
             >
-              {/* Glow layer */}
+              {/* Glow effect */}
               <motion.div
-                className="absolute inset-0 pointer-events-none opacity-0 group-hover:opacity-20 transition bg-gold"
+                className="absolute inset-0 bg-gold opacity-0 group-hover:opacity-20 transition"
               />
 
               {/* Icon */}
@@ -123,22 +157,32 @@ const Guide = () => {
 
       </div>
 
-      {/* IMAGE SECTION */}
+      {/* ================= IMAGE SECTION ================= */}
       <div className="flexCenter relative w-full mt-20">
 
-        {/* Background Image */}
-        <div className="relative w-full">
+        {/* Background Image with fade motion */}
+        <motion.div
+          variants={fadeImage}
+          initial="hidden"
+          whileInView="show"
+          viewport={{ once: true }}
+          className="relative w-full"
+        >
           <Image 
             src="/images/interior5.jpg"
             alt="interior"
             width={1440}
             height={580}
-            className="w-full object-cover object-center 2xl:rounded-5xl shadow-2xl"
+            className="w-full object-cover 2xl:rounded-5xl shadow-2xl"
           />
-        </div>
+        </motion.div>
 
-        {/* LUXURY INFO CARD */}
-        <div 
+        {/* Floating Info Card */}
+        <motion.div
+          variants={floatCard}
+          initial="hidden"
+          whileInView="show"
+          viewport={{ once: true }}
           className="
             absolute bg-white 
             py-8 px-6 gap-4 rounded-3xl shadow-xl border border-gold-light
@@ -160,7 +204,7 @@ const Guide = () => {
               alt="meter"
               width={20}
               height={160}
-              className="h-12 w-auto opacity-60"
+              className="h-12 opacity-60"
             />
 
             <div>
@@ -170,7 +214,7 @@ const Guide = () => {
               </p>
             </div>
           </div>
-        </div>
+        </motion.div>
 
       </div>
 
