@@ -41,9 +41,9 @@ const Hero = () => {
 
   const slides = [
     "/images/interior1.jpg",
-    "/images/interior2.jpg",
+    "/images/interior6.jpg",
     "/images/interior3.jpg",
-    "/images/interior4.jpg",
+    "/images/interior5.jpg",
   ];
 
   const handleThumbClick = (index: number) => {
@@ -130,15 +130,17 @@ const Hero = () => {
 
       {/* THUMBNAILS */}
       <motion.div
-        initial={{ opacity: 0, y: 30 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 1.1, delay: 1 }}
-        className="
-          absolute bottom-4 sm:bottom-6 right-1/2 sm:right-6 
-          translate-x-1/2 sm:translate-x-0
-          w-[90%] sm:w-[85%] md:w-[70%] lg:w-[60%] xl:w-[50%]
-          z-[2]"
-      >
+          initial={{ opacity: 0, y: 30 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 1.1, delay: 1 }}
+          className="
+            absolute bottom-4 sm:bottom-6
+            left-1/2 -translate-x-1/2
+            w-[92%] sm:w-[85%] md:w-[70%] lg:w-[60%] xl:w-[50%]
+            z-[2]
+          "
+        >
+
         <Swiper
           onSwiper={(swiper) => (thumbsSwiperRef.current = swiper)}
           modules={[Navigation, Thumbs]}
@@ -154,20 +156,35 @@ const Hero = () => {
         >
           {slides.map((src, i) => (
             <SwiperSlide key={i}>
-              <motion.div
-                initial={{ opacity: 0, scale: 0.85 }}
-                animate={{ opacity: 1, scale: 1 }}
-                transition={{ duration: 0.5, delay: 1 + i * 0.1 }}
-                onClick={() => handleThumbClick(i)}
-                className="relative h-24 sm:h-28 md:h-32 cursor-pointer rounded-md overflow-hidden transition-all duration-300 hover:ring-2 hover:ring-gold"
-              >
-                <Image
-                  src={src}
-                  alt={`Thumbnail ${i}`}
-                  fill
-                  className="object-cover rounded-md hover:opacity-80 transition"
-                />
-              </motion.div>
+             <motion.div
+  initial={{ opacity: 0, scale: 0.9 }}
+  animate={{ opacity: 1, scale: 1 }}
+  transition={{ duration: 0.45, delay: 1 + i * 0.08 }}
+  onClick={() => handleThumbClick(i)}
+  className="
+    relative 
+    h-28 sm:h-32 md:h-36 lg:h-40 
+    cursor-pointer 
+    rounded-lg 
+    overflow-hidden 
+    transition-all duration-300 
+    hover:ring-2 hover:ring-gold
+    shadow-md hover:shadow-xl justify-center
+  "
+>
+  <Image
+    src={src}
+    alt={`Thumbnail ${i}`}
+    fill
+    className="
+      object-cover object-center 
+      rounded-lg 
+      hover:opacity-85 
+      transition
+    "
+  />
+</motion.div>
+
             </SwiperSlide>
           ))}
         </Swiper>

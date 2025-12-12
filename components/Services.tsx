@@ -54,7 +54,7 @@ const Services = () => {
       {/* Hero Banner */}
       <section className="relative h-[55vh] flex items-center justify-center">
         <Image
-          src="/img/services-banner.jpg"
+          src="/images/design.jpg"
           alt="Services Banner"
           fill
           className="object-cover brightness-[0.45]"

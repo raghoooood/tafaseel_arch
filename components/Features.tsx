@@ -80,7 +80,7 @@ const ServicesSection = () => {
         className="absolute top-0 left-0 w-[50%] h-full hidden lg:block"
       >
         <Image
-          src="/images/interior2.jpg"
+          src="/images/design2.jpg"
           alt="Luxury Interior"
           fill
           className="object-cover rounded-r-[40px]"

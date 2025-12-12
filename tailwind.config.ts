@@ -46,8 +46,8 @@ module.exports = {
         return {
           'gold-gradient': `linear-gradient(to right, ${theme('colors.gold.DEFAULT')}, ${theme('colors.gold.dark')})`,
           'gold-gradient-light': `linear-gradient(to right, ${theme('colors.gold.light')}, ${theme('colors.gold.DEFAULT')})`,
-          'bg-img-1': "url('/img-1.png')",
-          'bg-img-2': "url('/img-2.png')",
+          'bg-img-1': "url('/images/interior6.jpg')",
+          'bg-img-2': "url('/images/design2.jpg')",
           'feature-bg': "url('/feature-bg.png')",
           pattern: "url('/pattern.png')",
           'pattern-2': "url('/pattern-bg.png')",

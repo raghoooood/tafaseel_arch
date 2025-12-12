@@ -7,7 +7,7 @@ export default function ContactPage() {
       {/* HERO SECTION */}
       <section className="relative w-full h-[45vh] flex items-center justify-center overflow-hidden">
         <Image
-          src="/images/interior4.jpg"
+          src="/images/contact.jpg"
           alt="Contact Background"
           fill
           className="object-cover brightness-50"

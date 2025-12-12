@@ -32,7 +32,7 @@ export default function AboutPage() {
       {/* ================= HERO ================= */}
       <section className="relative h-[65vh] w-full overflow-hidden">
         <Image
-          src="/images/interior3.jpg"
+          src="/images/design2.jpg"
           alt="Luxury Interior"
           fill
           className="object-cover brightness-[0.45]"
@@ -219,22 +219,22 @@ export default function AboutPage() {
           <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-10">
             {[
               {
-                img: "/images/about/residential.jpg",
+                img: "/images/residential.jpg",
                 title: "Residential Projects",
                 desc: "Villas & apartments designed for harmony, beauty, and comfort.",
               },
               {
-                img: "/images/about/commercial.jpg",
+                img: "/images/about_bg.jpg",
                 title: "Commercial Projects",
                 desc: "Offices, shops & cafés reflecting strong brand identity.",
               },
               {
-                img: "/images/about/architecture.jpg",
+                img: "/images/design.jpg",
                 title: "Architectural Projects",
                 desc: "Modern facades and structures with cultural expression.",
               },
               {
-                img: "/images/about/landscape.jpg",
+                img: "/images/landscape.jpg",
                 title: "Landscape Projects",
                 desc: "Outdoor spaces blending nature with architectural elegance.",
               },

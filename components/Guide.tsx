@@ -129,7 +129,7 @@ const Guide = () => {
         {/* Background Image */}
         <div className="relative w-full">
           <Image 
-            src="/images/interior1.jpg"
+            src="/images/interior5.jpg"
             alt="interior"
             width={1440}
             height={580}
