@@ -25,6 +25,7 @@ const GalleryItem: React.FC<GalleryItemProps> = ({ image, onClick }) => {
           transition-all duration-500 
           group-hover:scale-110
         "
+        loading="lazy"
       />
 
       {/* HOVER GOLD OUTLINE */}
