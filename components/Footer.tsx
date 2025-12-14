@@ -30,7 +30,7 @@ const Footer = () => {
               />
             </div>
 
-            <p className="font-poppins text-textMuted text-center md:text-left leading-relaxed">
+            <p className="font-poppins text-offwhite text-center md:text-left leading-relaxed">
               Tafaseel delivers luxury interior design & construction services with
               precision, innovation, and artistry—bringing your vision to life.
             </p>
@@ -64,7 +64,7 @@ const Footer = () => {
               Quick Links
             </h4>
 
-            <ul className="space-y-3 font-poppins text-textMuted">
+            <ul className="space-y-3 font-poppins text-offwhite">
               <li><Link href="/about" className="hover:text-gold transition">About Us</Link></li>
               <li><Link href="/services" className="hover:text-gold transition">Our Services</Link></li>
               <li><Link href="/projects" className="hover:text-gold transition">Projects</Link></li>
@@ -79,7 +79,7 @@ const Footer = () => {
               Contact Us
             </h4>
 
-            <div className="space-y-4 font-poppins text-textMuted">
+            <div className="space-y-4 font-poppins text-offwhite">
 
               <div className="flex items-start">
                 <FaMapMarkerAlt className="text-gold text-xl" />

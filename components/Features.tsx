@@ -62,8 +62,8 @@ const ServicesSection = () => {
   const removeTopCard = () => {
     setCards((prev) => {
       const updated = [...prev];
-      const first = updated.shift(); // remove first card
-      if (first) updated.push(first); // move it to the end
+      const first = updated.shift();
+      if (first) updated.push(first);
       return updated;
     });
   };
@@ -87,7 +87,7 @@ const ServicesSection = () => {
         />
       </motion.div>
 
-      {/* CONTENT RIGHT SIDE */}
+      {/* CONTENT */}
       <div className="relative max-w-7xl mx-auto px-6 lg:pl-[55%] z-10">
         
         {/* Title */}
@@ -107,8 +107,41 @@ const ServicesSection = () => {
           <div className="w-20 h-[3px] gold-gradient mt-4 rounded-full"></div>
         </motion.div>
 
-        {/* Stacked Swipeable Cards */}
+        {/* ============= CARDS ============= */}
         <div className="relative h-[420px] max-w-md mx-auto mt-10">
+
+          {/* FLOATING ARROW → */}
+          <motion.div
+            initial={{ opacity: 0, x: 0 }}
+            animate={{ opacity: 1, x: [0, 12, 0] }}
+            transition={{
+              duration: 1.8,
+              repeat: Infinity,
+              ease: "easeInOut"
+            }}
+            className="
+              absolute -right-10 top-1/2 -translate-y-1/2 
+              z-50 hidden sm:flex items-center
+              text-gold font-semibold tracking-wide
+            "
+          >
+            <span className="mr-2">Swipe</span>
+            <svg
+              width="26"
+              height="26"
+              viewBox="0 0 24 24"
+              className="text-gold"
+              fill="none"
+              stroke="currentColor"
+              strokeWidth="2"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+            >
+              <path d="M5 12h14" />
+              <path d="M13 6l6 6-6 6" />
+            </svg>
+          </motion.div>
+
           {cards.map((service, index) => {
             const Icon = service.icon;
 
@@ -123,8 +156,8 @@ const ServicesSection = () => {
                   }
                 }}
                 className="
-                  absolute w-full bg-white p-8 rounded-3xl shadow-xl border border-gold-light/40 
-                  cursor-grab active:cursor-grabbing
+                  absolute w-full bg-white p-8 rounded-3xl shadow-xl 
+                  border border-gold-light/40 cursor-grab active:cursor-grabbing
                 "
                 style={{
                   zIndex: SERVICES.length - index,
@@ -159,7 +192,6 @@ const ServicesSection = () => {
           })}
         </div>
 
-        {/* Swipe Hint */}
         <p className="text-center mt-6 text-textMuted text-sm">
           Swipe the cards → to explore our services
         </p>
