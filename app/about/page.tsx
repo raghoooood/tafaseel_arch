@@ -159,51 +159,7 @@ export default function AboutPage() {
         </div>
       </section>
 
-      {/* ================= WOOD MANUFACTURING ================= */}
-      <section className="max-w-7xl mx-auto px-6 py-20">
-        <motion.h2
-          variants={fadeUp}
-          initial="hidden"
-          whileInView="show"
-          className="text-4xl font-bold mb-6"
-        >
-          Wood Manufacturing & Joinery
-        </motion.h2>
-
-        <motion.p
-          variants={fadeUp}
-          initial="hidden"
-          whileInView="show"
-          className="text-lg text-textMuted leading-relaxed mb-10"
-        >
-          Our UAE-based wood factory produces high-end woodwork with craftsmanship,  
-          precision, and luxury finishing — ensuring seamless integration across all projects.
-        </motion.p>
-
-        <div className="grid md:grid-cols-2 gap-10">
-          <div>
-            <h3 className="font-semibold text-xl mb-3">Our Services Include:</h3>
-            <ul className="space-y-2 text-textMuted">
-              <li>• Custom wall cladding & décor</li>
-              <li>• Interior & exterior wooden doors</li>
-              <li>• Walk-in closets & wardrobes</li>
-              <li>• Bespoke furniture production</li>
-              <li>• Full joinery & carpentry solutions</li>
-            </ul>
-          </div>
-
-          <div>
-            <h3 className="font-semibold text-xl mb-3">Why Our Woodwork Stands Out:</h3>
-            <ul className="space-y-2 text-textMuted">
-              <li>• In-house UAE manufacturing</li>
-              <li>• Premium finishing quality</li>
-              <li>• Accurate measurements</li>
-              <li>• Exceptional attention to detail</li>
-            </ul>
-          </div>
-        </div>
-      </section>
-
+      
       {/* ================= PROJECT TYPES ================= */}
       <section className="bg-white py-20">
         <div className="max-w-7xl mx-auto px-6">
@@ -263,6 +219,52 @@ export default function AboutPage() {
           </div>
         </div>
       </section>
+
+      {/* ================= WOOD MANUFACTURING ================= */}
+      <section className="max-w-7xl mx-auto px-6 py-20">
+        <motion.h2
+          variants={fadeUp}
+          initial="hidden"
+          whileInView="show"
+          className="text-4xl font-bold mb-6"
+        >
+          Wood Manufacturing & Joinery
+        </motion.h2>
+
+        <motion.p
+          variants={fadeUp}
+          initial="hidden"
+          whileInView="show"
+          className="text-lg text-textMuted leading-relaxed mb-10"
+        >
+          Our UAE-based wood factory produces high-end woodwork with craftsmanship,  
+          precision, and luxury finishing — ensuring seamless integration across all projects.
+        </motion.p>
+
+        <div className="grid md:grid-cols-2 gap-10">
+          <div>
+            <h3 className="font-semibold text-xl mb-3">Our Services Include:</h3>
+            <ul className="space-y-2 text-textMuted">
+              <li>• Custom wall cladding & décor</li>
+              <li>• Interior & exterior wooden doors</li>
+              <li>• Walk-in closets & wardrobes</li>
+              <li>• Bespoke furniture production</li>
+              <li>• Full joinery & carpentry solutions</li>
+            </ul>
+          </div>
+
+          <div>
+            <h3 className="font-semibold text-xl mb-3">Why Our Woodwork Stands Out:</h3>
+            <ul className="space-y-2 text-textMuted">
+              <li>• In-house UAE manufacturing</li>
+              <li>• Premium finishing quality</li>
+              <li>• Accurate measurements</li>
+              <li>• Exceptional attention to detail</li>
+            </ul>
+          </div>
+        </div>
+      </section>
+
 
       {/* ================= MISSION ================= */}
       <section className="max-w-6xl mx-auto px-6 py-20">
