@@ -1,6 +1,7 @@
 "use client";
 
 import { motion } from "framer-motion";
+import { h3 } from "framer-motion/client";
 import CountUp from "react-countup";
 
 // Motion Variants
@@ -47,7 +48,7 @@ export default function TeamStats() {
         {/* ENGINEERS */}
         <motion.div variants={fadeUp} className="group">
           <h3 className="text-5xl font-bold text-gold drop-shadow-sm">
-            <CountUp end={15} duration={2} />+
+            <CountUp end={8} duration={2} />+
           </h3>
           <p className="text-charcoal mt-2 font-medium group-hover:text-gold transition">
             Engineers

@@ -15,7 +15,7 @@ import {
 const COLORS = ["#D4AF37", "#2A2A2A"]; // Gold + Charcoal
 
 const barData = [
-  { name: "Engineering Team", value: 15 },
+  { name: "Engineering Team", value: 8 },
   { name: "Execution Team", value: 32 },
 ];
 
