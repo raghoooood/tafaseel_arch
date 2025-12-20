@@ -41,8 +41,8 @@ const Navbar = () => {
         <Image
           src="/logo.svg"
           alt="Tafaseel Logo"
-          width={170}
-          height={60}
+          width={267}
+          height={80}
           className="cursor-pointer select-none"
         />
       </Link>
