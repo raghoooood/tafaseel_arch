@@ -47,21 +47,21 @@ export default function ContactPage() {
               <div>
                 <h4 className="text-gold font-semibold text-xl">WhatsApp</h4>
                 <a
-                  href="https://wa.me/971581927153"
+                  href="https://wa.me/00971589956754"
                   target="_blank"
                   className="text-charcoal hover:text-gold transition"
                 >
-                  +971 58 192 7153
+                  +971 589 956 754
                 </a>
               </div>
 
               <div>
                 <h4 className="text-gold font-semibold text-xl">Telephone</h4>
                 <a
-                  href="tel:+971589956754"
+                  href="tel:+971588509776"
                   className="text-charcoal hover:text-gold transition"
                 >
-                  +971 58 995 6754
+                  +971 588 509 776
                 </a>
               </div>
 
@@ -162,7 +162,7 @@ export default function ContactPage() {
           </p>
 
           <a
-            href="https://wa.me/971581927153"
+            href="https://wa.me/00971589956754"
             target="_blank"
             className="inline-block mt-6 px-8 py-3 gold-gradient text-white rounded-xl font-semibold shadow-md hover:opacity-90 transition"
           >

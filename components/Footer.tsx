@@ -98,11 +98,11 @@ const Footer = () => {
               <div className="flex items-start">
                 <FaPhoneAlt className="text-gold text-lg" />
                 <div className="ml-3 flex flex-col">
-                  <a href="tel:+971589956754" className="hover:text-gold transition">
-                    +971 58 995 6754
+                  <a href="tel:+971588509776" className="hover:text-gold transition">
+                    +971 588 509 776
                   </a>
-                  <a href="tel:+911234567890" className="hover:text-gold transition">
-                    +91 12345 67890
+                  <a href="tel:+971589956754" className="hover:text-gold transition">
+                    +971 589 956 754
                   </a>
                 </div>
               </div>
