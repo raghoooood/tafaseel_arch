@@ -28,9 +28,9 @@ const Navbar = () => {
   return (
     <nav
      className="
-        sticky top-0 z-[500]  // <— safe but far below modal
-        w-full px-6 py-4
-        backdrop-blur-xl bg-white/70
+        sticky top-0 z-[500]  
+        w-full px-4 py-1
+        backdrop-blur-lg bg-white/70
         border-b border-gold-light/30
         shadow-[0_4px_30px_rgba(0,0,0,0.04)]
         flex items-center justify-between
@@ -41,7 +41,7 @@ const Navbar = () => {
         <Image
           src="/logo.svg"
           alt="Tafaseel Logo"
-          width={267}
+          width={200}
           height={80}
           className="cursor-pointer select-none"
         />

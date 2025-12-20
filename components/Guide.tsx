@@ -3,8 +3,16 @@
 import Image from "next/image";
 import React from "react";
 import { motion, Variants } from "framer-motion";
-import { FaCubes, FaHardHat, FaPaintBrush, FaRulerCombined } from "react-icons/fa";
+import { 
+  FaCubes, 
+  FaHardHat, 
+  FaPaintBrush, 
+  FaRulerCombined 
+} from "react-icons/fa";
 
+/* =======================
+✨ SERVICES DATA
+======================= */
 const servicesData = [
   {
     title: "Interior & Exterior Design",
@@ -25,50 +33,41 @@ const servicesData = [
 ];
 
 /* =======================
-✨ MOTION VARIANTS
+✨ SLIDER IMAGES — Folder A
 ======================= */
+const sliderImages = Array.from({ length: 12 }, (_, i) =>
+  `/images/exterior/exterior-${i + 1}.png`
+);
 
+/* =======================
+✨ ANIMATION VARIANTS
+======================= */
 const fadeUp: Variants = {
   hidden: { opacity: 0, y: 35 },
-  show: {
-    opacity: 1,
-    y: 0,
-    transition: { duration: 0.8, ease: [0.25, 0.1, 0.25, 1] }
-  }
+  show: { opacity: 1, y: 0.5, transition: { duration: 0.9 } }
 };
 
 const staggerContainer: Variants = {
   hidden: {},
-  show: {
-    transition: { staggerChildren: 0.18 }
-  }
+  show: { transition: { staggerChildren: 0.20 } }
 };
 
 const cardVariant: Variants = {
-  hidden: { opacity: 0, y: 40, scale: 0.95 },
+  hidden: { opacity: 0, y: 40 },
   show: {
-    opacity: 1,
-    y: 0,
-    scale: 1,
-    transition: { duration: 0.7, ease: "easeOut" }
+    opacity: 1, y: 0, transition: { duration: 0.8 }
   }
 };
 
 const fadeImage: Variants = {
-  hidden: { opacity: 0, scale: 1.1 },
-  show: {
-    opacity: 1,
-    scale: 1,
-    transition: { duration: 1, ease: "easeOut" }
-  }
+  hidden: { opacity: 0 },
+  show: { opacity: 1, transition: { duration: 1.5 } }
 };
 
 const floatCard: Variants = {
   hidden: { opacity: 0, y: 30 },
   show: {
-    opacity: 1,
-    y: 0,
-    transition: { duration: 0.9, ease: "easeOut", delay: 0.3 }
+    opacity: 1, y: 0, transition: { duration: 0.9, delay: 0.6 }
   }
 };
 
@@ -77,10 +76,31 @@ const floatCard: Variants = {
 ======================= */
 
 const Guide = () => {
+
+  const [current, setCurrent] = React.useState(0);
+
+  /* ⏳ SLIDE SPEED = 6 seconds */
+  React.useEffect(() => {
+    const interval = setInterval(() => {
+      setCurrent((prev) => (prev + 1) % sliderImages.length);
+    }, 7000);
+    return () => clearInterval(interval);
+  }, []);
+
+  /* Arrow Functions */
+  const prevSlide = () => {
+    setCurrent((prev) =>
+      prev === 0 ? sliderImages.length - 1 : prev - 1
+    );
+  };
+  const nextSlide = () => {
+    setCurrent((prev) => (prev + 1) % sliderImages.length);
+  };
+
   return (
     <section className="max-container padding-container w-full py-20">
 
-      {/* ================= LEFT TEXT SECTION ================= */}
+      {/* ================= LEFT TEXT ================= */}
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-start">
 
         <motion.div
@@ -89,30 +109,26 @@ const Guide = () => {
           whileInView="show"
           viewport={{ once: true }}
         >
-          <p className="uppercase tracking-[0.2em] font-montserrat text-gold-light mb-4 text-sm">
+          <p className="uppercase tracking-[0.2em] text-gold-light mb-4 text-sm">
             Where Art Lives in Every Detail
           </p>
 
-          <h2 className="font-montserrat font-bold text-4xl lg:text-6xl text-charcoal mb-6 leading-tight">
+          <h2 className="font-montserrat font-bold text-4xl lg:text-6xl text-charcoal mb-6">
             At Tafaseel
           </h2>
 
           <p className="font-poppins text-textMuted text-lg leading-relaxed">
-            We believe that true beauty begins in the smallest details that make the biggest
-            difference. We transform ideas into spaces that radiate elegance and harmony,
-            blending modern innovation with Arabic identity to reflect your personality.
-            Our architects and designers combine vision with precision to deliver an
-            exceptional journey — from the first concept to the final handover.
+            We believe that true beauty begins in the smallest details...
           </p>
         </motion.div>
 
-        {/* ================= SERVICE CARDS ================= */}
+        {/* ================= SERVICES ================= */}
         <motion.div
           variants={staggerContainer}
           initial="hidden"
           whileInView="show"
-          viewport={{ once: true, amount: 0.3 }}
-          className="grid grid-cols-2 gap-8 p-2 sm:p-4"
+          viewport={{ once: true }}
+          className="grid grid-cols-2 gap-8"
         >
           {servicesData.map((service, index) => (
             <motion.div
@@ -124,31 +140,14 @@ const Guide = () => {
                 rotateX: 6,
                 rotateY: -6,
                 boxShadow: "0 25px 50px rgba(0,0,0,0.18)",
-                transition: { type: "spring", stiffness: 200, damping: 12 }
               }}
-              className="
-                p-6 bg-white rounded-2xl shadow-md border border-gold-light/30
-                hover:border-gold transition-all duration-500
-                relative group overflow-hidden
-              "
+              className="p-6 bg-white rounded-2xl shadow-md border border-gold-light group transition"
             >
-              {/* Glow effect */}
-              <motion.div
-                className="absolute inset-0 bg-gold opacity-0 group-hover:opacity-20 transition"
-              />
-
-              {/* Icon */}
-              <div
-                className="
-                  w-16 h-16 flex items-center justify-center rounded-2xl mb-4 
-                  bg-gold/10 group-hover:bg-gold/20 transition duration-300
-                "
-              >
+              <div className="w-16 h-16 flex items-center justify-center mb-4 bg-gold/10 rounded-xl group-hover:bg-gold/20 transition">
                 {service.icon}
               </div>
 
-              {/* Title */}
-              <h3 className="font-montserrat font-semibold text-charcoal group-hover:text-gold text-lg tracking-wide transition">
+              <h3 className="font-semibold text-charcoal group-hover:text-gold transition">
                 {service.title}
               </h3>
             </motion.div>
@@ -157,27 +156,66 @@ const Guide = () => {
 
       </div>
 
-      {/* ================= IMAGE SECTION ================= */}
-      <div className="flexCenter relative w-full mt-20">
+      {/* ================= LUXURY SLIDER SECTION ================= */}
+      <div className="relative w-full mt-20">
 
-        {/* Background Image with fade motion */}
+        {/* SLIDER WRAPPER */}
         <motion.div
           variants={fadeImage}
           initial="hidden"
           whileInView="show"
           viewport={{ once: true }}
-          className="relative w-full"
+          className="relative w-full h-[680px] overflow-hidden rounded-3xl shadow-2xl"
         >
-          <Image 
-            src="/images/interior5.jpg"
-            alt="interior"
-            width={1440}
-            height={580}
-            className="w-full object-cover 2xl:rounded-5xl shadow-2xl"
-          />
+          {sliderImages.map((src, index) => (
+            <motion.div
+              key={index}
+              initial={{ opacity: 0, scale: 1.08 }}
+              animate={{
+                opacity: index === current ? 1 : 0,
+                scale: index === current ? 1 : 1.08,
+              }}
+              transition={{ duration: 1.3, ease: "easeOut" }}
+              className="absolute inset-0 p-8"
+            >
+              <Image
+                src={src}
+                alt={`exterior-${index}`}
+                fill
+                quality={100}
+                priority={index === 0}
+                className="object-cover "
+              />
+            </motion.div>
+          ))}
+
+          {/* LEFT ARROW */}
+          <button
+            onClick={prevSlide}
+            className="
+              absolute left-6 top-1/2 -translate-y-1/2 
+              text-white/90 hover:text-white 
+              text-4xl font-light z-20
+            "
+          >
+            ←
+          </button>
+
+          {/* RIGHT ARROW */}
+          <button
+            onClick={nextSlide}
+            className="
+              absolute right-6 top-1/2 -translate-y-1/2 
+              text-white/90 hover:text-white 
+              text-4xl font-light z-20
+            "
+          >
+            →
+          </button>
+
         </motion.div>
 
-        {/* Floating Info Card */}
+        {/* FLOATING INFO CARD — SAME AS YOUR ORIGINAL */}
         <motion.div
           variants={floatCard}
           initial="hidden"
@@ -191,7 +229,7 @@ const Guide = () => {
           "
         >
           <h4 className="font-montserrat font-bold text-charcoal text-xl">
-            Premium Interiors
+            Premium Exterior
           </h4>
 
           <p className="font-poppins text-textMuted text-sm">
@@ -199,7 +237,7 @@ const Guide = () => {
           </p>
 
           <div className="flex items-center gap-4 mt-4">
-            <Image 
+            <Image
               src="/meter.svg"
               alt="meter"
               width={20}
@@ -208,8 +246,8 @@ const Guide = () => {
             />
 
             <div>
-              <p className="font-poppins text-textMuted text-sm">Project Timeline</p>
-              <p className="font-montserrat font-semibold text-gold mt-1 text-lg">
+              <p className="text-textMuted text-sm">Project Timeline</p>
+              <p className="text-gold font-semibold text-lg mt-1">
                 6–12 Weeks
               </p>
             </div>
@@ -217,7 +255,6 @@ const Guide = () => {
         </motion.div>
 
       </div>
-
     </section>
   );
 };
