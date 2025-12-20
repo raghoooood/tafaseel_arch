@@ -36,26 +36,30 @@ const Footer = () => {
             </p>
 
             {/* SOCIAL ICONS */}
-            <div className="mt-6 flex justify-center md:justify-start gap-4">
-              {SOCIALS.links.map((icon, idx) => (
-                <Link
-                  href="/"
-                  key={idx}
-                  className="
-                    p-2 rounded-full bg-white/10 border border-white/10 
-                    hover:bg-gold hover:border-gold-light 
-                    hover:scale-110 transition-all duration-300 shadow-md
-                  "
-                >
-                  <Image
-                    src={icon}
-                    alt="Social Icon"
-                    width={22}
-                    height={22}
-                  />
-                </Link>
-              ))}
-            </div>
+          {/* SOCIAL ICONS */}
+<div className="mt-6 flex justify-center md:justify-start gap-4">
+  {SOCIALS.links.map((item, idx) => (
+    <Link
+      key={idx}
+      href={item.url}
+      target="_blank"
+      rel="noopener noreferrer"
+      className="
+        p-2 rounded-full bg-white/10 border border-white/10 
+        hover:bg-gold hover:border-gold-light 
+        hover:scale-110 transition-all duration-300 shadow-md
+      "
+    >
+      <Image
+        src={item.icon}
+        alt="Social Icon"
+        width={22}
+        height={22}
+      />
+    </Link>
+  ))}
+</div>
+
           </div>
 
           {/* QUICK LINKS */}

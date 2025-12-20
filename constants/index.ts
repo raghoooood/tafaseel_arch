@@ -51,41 +51,28 @@ export const FEATURES = [
   },
 ];
 
-// FOOTER SECTION
-export const FOOTER_LINKS = [
-  {
-    title: 'Learn More',
-    links: [
-      'About Hilink',
-      'Press Releases',
-      'Environment',
-      'Jobs',
-      'Privacy Policy',
-      'Contact Us',
-    ],
-  },
-  {
-    title: 'Our Community',
-    links: ['Climbing xixixi', 'Hiking hilink', 'Hilink kinthill'],
-  },
-];
 
-export const FOOTER_CONTACT_INFO = {
-  title: 'Contact Us',
-  links: [
-    { label: 'Admin Officer', value: '123-456-7890' },
-    { label: 'Email Officer', value: 'hilink@akinthil.com' },
-  ],
-};
+
+
 
 export const SOCIALS = {
-  title: 'Social',
+  title: "Social",
   links: [
-    '/facebook.svg',
-    '/instagram.svg',
-    '/twitter.svg',
+    {
+      icon: "/facebook.svg",
+      url: "https://facebook.com/Tafaseel", // change to your real link
+    },
+    {
+      icon: "/instagram.svg",
+      url: "https://www.instagram.com/tafaseel.architecture/", // change to your real link
+    },
+    {
+      icon: "/twitter.svg",
+      url: "https://twitter.com/tafaseel", // change to your real link
+    },
   ],
 };
+
 
 
 
