@@ -33,7 +33,7 @@ const servicesData = [
 ];
 
 /* =======================
-✨ SLIDER IMAGES — Folder A
+✨ SLIDER IMAGES — /public/images/exterior/
 ======================= */
 const sliderImages = Array.from({ length: 12 }, (_, i) =>
   `/images/exterior/exterior-${i + 1}.png`
@@ -44,7 +44,7 @@ const sliderImages = Array.from({ length: 12 }, (_, i) =>
 ======================= */
 const fadeUp: Variants = {
   hidden: { opacity: 0, y: 35 },
-  show: { opacity: 1, y: 0.5, transition: { duration: 0.9 } }
+  show: { opacity: 1, y: 0, transition: { duration: 0.9 } }
 };
 
 const staggerContainer: Variants = {
@@ -79,7 +79,7 @@ const Guide = () => {
 
   const [current, setCurrent] = React.useState(0);
 
-  /* ⏳ SLIDE SPEED = 6 seconds */
+  /* ⏳ SLIDER SPEED = 7 seconds for luxury */
   React.useEffect(() => {
     const interval = setInterval(() => {
       setCurrent((prev) => (prev + 1) % sliderImages.length);
@@ -118,7 +118,8 @@ const Guide = () => {
           </h2>
 
           <p className="font-poppins text-textMuted text-lg leading-relaxed">
-            We believe that true beauty begins in the smallest details...
+            We believe that true beauty begins in the smallest details. We transform ideas 
+            into spaces that radiate elegance and harmony, blending innovation with identity.
           </p>
         </motion.div>
 
@@ -156,76 +157,24 @@ const Guide = () => {
 
       </div>
 
-      {/* ================= LUXURY SLIDER SECTION ================= */}
+      {/* ================= LUXURY RESPONSIVE SLIDER SECTION ================= */}
       <div className="relative w-full mt-20">
 
-        {/* SLIDER WRAPPER */}
-        <motion.div
-          variants={fadeImage}
-          initial="hidden"
-          whileInView="show"
-          viewport={{ once: true }}
-          className="relative w-full h-[680px] overflow-hidden rounded-3xl shadow-2xl"
-        >
-          {sliderImages.map((src, index) => (
-            <motion.div
-              key={index}
-              initial={{ opacity: 0, scale: 1.08 }}
-              animate={{
-                opacity: index === current ? 1 : 0,
-                scale: index === current ? 1 : 1.08,
-              }}
-              transition={{ duration: 1.3, ease: "easeOut" }}
-              className="absolute inset-0 p-8"
-            >
-              <Image
-                src={src}
-                alt={`exterior-${index}`}
-                fill
-                quality={100}
-                priority={index === 0}
-                className="object-cover "
-              />
-            </motion.div>
-          ))}
-
-          {/* LEFT ARROW */}
-          <button
-            onClick={prevSlide}
-            className="
-              absolute left-6 top-1/2 -translate-y-1/2 
-              text-white/90 hover:text-white 
-              text-4xl font-light z-20
-            "
-          >
-            ←
-          </button>
-
-          {/* RIGHT ARROW */}
-          <button
-            onClick={nextSlide}
-            className="
-              absolute right-6 top-1/2 -translate-y-1/2 
-              text-white/90 hover:text-white 
-              text-4xl font-light z-20
-            "
-          >
-            →
-          </button>
-
-        </motion.div>
-
-        {/* FLOATING INFO CARD — SAME AS YOUR ORIGINAL */}
+        {/* === FLOATING TIMELINE CARD (Always on Top) === */}
         <motion.div
           variants={floatCard}
           initial="hidden"
           whileInView="show"
           viewport={{ once: true }}
           className="
-            absolute bg-white 
-            py-8 px-6 gap-4 rounded-3xl shadow-xl border border-gold-light
-            md:left-[5%] lg:top-20 max-w-[280px] w-full flex flex-col
-            backdrop-blur-[2px]
+            absolute z-30
+            top-4 sm:top-6 lg:top-10 
+            left-1/2 lg:left-[6%]
+            -translate-x-1/2 lg:translate-x-0
+            bg-white/90 backdrop-blur-xl
+            py-6 px-6 rounded-3xl shadow-xl border border-gold-light
+            w-[88%] sm:w-[300px]
+            flex flex-col gap-4
           "
         >
           <h4 className="font-montserrat font-bold text-charcoal text-xl">
@@ -236,7 +185,7 @@ const Guide = () => {
             Design Excellence Delivered
           </p>
 
-          <div className="flex items-center gap-4 mt-4">
+          <div className="flex items-center gap-4 mt-2">
             <Image
               src="/meter.svg"
               alt="meter"
@@ -252,6 +201,70 @@ const Guide = () => {
               </p>
             </div>
           </div>
+        </motion.div>
+
+        {/* === RESPONSIVE SLIDER === */}
+        <motion.div
+          variants={fadeImage}
+          initial="hidden"
+          whileInView="show"
+          viewport={{ once: true }}
+          className="
+            relative w-full 
+            h-[420px] sm:h-[520px] lg:h-[680px] 
+            overflow-hidden 
+            rounded-3xl shadow-2xl
+          "
+        >
+          {sliderImages.map((src, index) => (
+            <motion.div
+              key={index}
+              initial={{ opacity: 0, scale: 1.08 }}
+              animate={{
+                opacity: index === current ? 1 : 0,
+                scale: index === current ? 1 : 1.08,
+              }}
+              transition={{ duration: 1.3, ease: "easeOut" }}
+              className="absolute inset-0"
+            >
+              <Image
+                src={src}
+                alt={`exterior-${index}`}
+                fill
+                quality={100}
+                priority={index === 0}
+                className="object-cover"
+              />
+            </motion.div>
+          ))}
+
+          {/* LEFT ARROW */}
+          <button
+            onClick={prevSlide}
+            className="
+              absolute left-3 sm:left-5 
+              top-1/2 -translate-y-1/2 
+              text-white/80 hover:text-white
+              text-3xl sm:text-4xl 
+              z-20 select-none
+            "
+          >
+            ←
+          </button>
+
+          {/* RIGHT ARROW */}
+          <button
+            onClick={nextSlide}
+            className="
+              absolute right-3 sm:right-5 
+              top-1/2 -translate-y-1/2 
+              text-white/80 hover:text-white
+              text-3xl sm:text-4xl 
+              z-20 select-none
+            "
+          >
+            →
+          </button>
         </motion.div>
 
       </div>
