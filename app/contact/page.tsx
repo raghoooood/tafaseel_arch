@@ -1,6 +1,32 @@
+"use client";
 import Image from "next/image";
+import { useState } from "react";
+import toast from "react-hot-toast";
 
 export default function ContactPage() {
+    const [loading, setLoading] = useState(false);
+
+
+   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    setLoading(true);
+
+    const formData = new FormData(e.currentTarget);
+
+    const res = await fetch("/api/contact", {
+      method: "POST",
+      body: formData,
+    });
+
+    setLoading(false);
+
+    if (res.ok) {
+      toast.success("Your message has been sent successfully!");
+     //  e.currentTarget.reset();
+    } else {
+      toast.error("Failed to send message. Please try again.");
+    }
+  };
   return (
     <>
 
@@ -83,10 +109,12 @@ export default function ContactPage() {
               Send Us a Message
             </h3>
 
-            <form className="space-y-6">
+            <form className="space-y-6" onSubmit={handleSubmit}>
+              <input type="hidden" name="formType" value="contact" />
               <div>
                 <label className="font-poppins text-charcoal text-sm">Full Name</label>
                 <input
+                  name="firstName"
                   type="text"
                   className="w-full mt-2 p-3 rounded-xl border border-gray-300 shadow-sm focus:ring-2 focus:ring-gold focus:outline-none"
                 />
@@ -95,6 +123,7 @@ export default function ContactPage() {
               <div>
                 <label className="font-poppins text-charcoal text-sm">Email</label>
                 <input
+                  name="email"
                   type="email"
                   className="w-full mt-2 p-3 rounded-xl border border-gray-300 shadow-sm focus:ring-2 focus:ring-gold focus:outline-none"
                 />
@@ -103,6 +132,7 @@ export default function ContactPage() {
               <div>
                 <label className="font-poppins text-charcoal text-sm">Phone</label>
                 <input
+                  name="phoneNumber"
                   type="text"
                   className="w-full mt-2 p-3 rounded-xl border border-gray-300 shadow-sm focus:ring-2 focus:ring-gold focus:outline-none"
                 />
@@ -111,6 +141,7 @@ export default function ContactPage() {
               <div>
                 <label className="font-poppins text-charcoal text-sm">Message</label>
                 <textarea
+                   name="message"
                   rows={4}
                   className="w-full mt-2 p-3 rounded-xl border border-gray-300 shadow-sm focus:ring-2 focus:ring-gold focus:outline-none"
                 ></textarea>

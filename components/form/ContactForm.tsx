@@ -5,6 +5,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
 import PhoneInput from "react-phone-input-2";
 import "react-phone-input-2/lib/style.css";
+import toast from "react-hot-toast";
 
 // ---------------------------
 //  ZOD SCHEMA
@@ -56,11 +57,39 @@ export default function ContactForm() {
     resolver: zodResolver(contactSchema),
   });
 
-  const onSubmit = (data: ContactFormValues) => {
-    console.log("FORM SUBMITTED:", data);
-    // TODO: send to backend / email / WhatsApp etc.
+
+
+ const onSubmit = async (data: ContactFormValues) => {
+  const formData = new FormData();
+
+  // Append normal fields
+  formData.append("formType", "consultation");
+  formData.append("projectType", data.projectType);
+  formData.append("emirate", data.emirate);
+  formData.append("firstName", data.firstName);
+  formData.append("phoneNumber", data.phoneNumber);
+  formData.append("email", data.email || "");
+
+  // Append file if exists
+  if (data.file && data.file.length > 0) {
+    formData.append("file", data.file[0]); // only first file
+  }
+
+  const res = await fetch("/api/contact", {
+    method: "POST",
+    body: formData,
+  });
+
+  if (res.ok) {
+    toast.success("Your message has been sent successfully!");
     reset();
-  };
+  } else {
+    const error = await res.json();
+    toast.error("Failed to send message: " + (error?.error || "Unknown error"));
+  }
+};
+
+
 
   return (
     <form
@@ -69,7 +98,10 @@ export default function ContactForm() {
         space-y-6 bg-white p-6 md:p-8 
         rounded-2xl shadow-xl border border-gold-light
       "
+      encType="multipart/form-data"
     >
+        <input type="hidden" name="formType" value="consultation" />
+
       {/* TITLE */}
       <h2 className="text-3xl font-montserrat font-bold text-charcoal leading-tight">
         Get Your Professional Consultation
@@ -160,6 +192,7 @@ export default function ContactForm() {
         <label className="form-label">Email (Optional)</label>
         <input
           {...register("email")}
+          name="email"
           type="email"
           placeholder="example@email.com"
           className="form-input"

@@ -3,6 +3,7 @@ import "./globals.css";
 
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
+import ToastProvider from "@/components/ToastProvider";
 
 export const metadata: Metadata = {
   title: {
@@ -24,7 +25,7 @@ export const metadata: Metadata = {
     title: "Tafaseel — Luxury Interior Design & Architecture",
     description:
       "Premium interior design, construction supervision, and architectural services in the UAE.",
-    url: "https://tafaseel.com",
+    url: "https://tafaseelarch.com",
     siteName: "Tafaseel",
   },
   icons: {
@@ -51,6 +52,7 @@ export default function RootLayout({
 
         {/* Global Footer */}
         <Footer />
+        <ToastProvider />
 
       </body>
     </html>
