@@ -1,63 +1,111 @@
-"use client"
+"use client";
 
 import Link from "next/link";
 import Image from "next/image";
-import { urlFor } from "@/lib/sanityLip/createClient";
+import { urlFor } from "@/lib/sanity/createClient";
 import { Post } from "@/types";
+
+/* =========================
+   DATE HELPER (SAFE)
+========================= */
+const getPostDate = (post: Post) => {
+  const date = post.publishedAt || post._createdAt;
+  if (!date) return "";
+
+  return new Date(date).toLocaleDateString("en-US", {
+    day: "numeric",
+    month: "long",
+    year: "numeric",
+  });
+};
 
 interface BlogCardProps {
   post: Post;
 }
 
-const BlogCard = ({ post }: BlogCardProps) => {
+export default function BlogCard({ post }: BlogCardProps) {
   return (
     <Link
-      href={{
-        pathname: `/post/${post?.slug?.current}`,
-        query: { slug: post?.slug?.current },
-      }}
-      key={post?._id}
+      href={`/post/${post.slug.current}`}
+      className="group block h-full"
     >
-      <div className="flex flex-col bg-white rounded-lg shadow-lg overflow-hidden hover:shadow-xl transition-shadow duration-300 h-full md:h-[350px]">
-        <div className="relative flex-shrink-0 h-[200px] sm:h-[250px] md:h-[180px] w-[385px]">
-          {post?.mainImage && (
-            <Image
-              src={urlFor(post?.mainImage).url()}
-              width={500}
-              height={250}
-              alt="blog post image"
-              className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
-            />
+      <article
+        className="relative flex flex-col h-full bg-white rounded-3xl 
+                   overflow-hidden shadow-md transition-all duration-500
+                   hover:shadow-2xl hover:-translate-y-1"
+      >
+        {/* ================= IMAGE ================= */}
+        <div className="relative h-[240px] overflow-hidden">
+          {post.mainImage && (
+            <>
+              <Image
+                src={urlFor(post.mainImage).width(900).height(600).url()}
+                alt={post.title}
+                fill
+                className="object-cover transition-transform duration-700 
+                           group-hover:scale-110"
+              />
+
+              {/* Dark overlay */}
+              <div className="absolute inset-0 bg-black/20 opacity-0 
+                              group-hover:opacity-100 transition duration-500" />
+
+              {/* Gold accent line */}
+              <div className="absolute bottom-0 left-0 h-[3px] w-0 
+                              gold-gradient group-hover:w-full transition-all duration-700" />
+            </>
           )}
         </div>
-        <div className="flex flex-col justify-between p-4 flex-grow">
-          <h2 className="text-md md:text-lg font-semibold hover:text-orange-600 dark:text-gray-800 transition-colors duration-200">
-            {post?.title}
-          </h2>
-          <h4 className="text-sm md:text-md  dark:text-gray-800 transition-colors duration-200">
-           <span className="font-semibold">created by : </span> {post?.author?.name}
-          </h4>
-          <div className="text-sm md:text-base text-gray-700 line-clamp-3 font-semibold">
-            {post?.description.length > 200 ? (
-              <>
-                {post?.description.slice(0, 100)}...
-                <span className="text-orange-600"> Read More</span>
-              </>
-            ) : (
-              post?.description
-            )}
-          </div>
-          <p className="text-gray-500 text-xs md:text-sm">
-            {new Date(post?._createdAt).toLocaleDateString("en-US", {
-              day: "numeric",
-              month: "long",
-              year: "numeric",
-            })}
+
+        {/* ================= CONTENT ================= */}
+        <div className="flex flex-col flex-grow p-6">
+          {/* Title */}
+          <h3
+            className="font-montserrat text-lg font-semibold text-charcoal 
+                       mb-3 leading-snug transition-colors
+                       group-hover:text-gold"
+          >
+            {post.title}
+          </h3>
+
+          {/* Author */}
+          <p className="text-sm text-gray-500 mb-4">
+            By{" "}
+            <span className="font-medium text-charcoal">
+              {post.author?.name || "Tafaseel Team"}
+            </span>
           </p>
+
+          {/* Description */}
+          <p className="text-body text-sm text-gray-600 line-clamp-3 mb-6">
+            {post.description}
+          </p>
+
+          {/* Spacer */}
+          <div className="flex-grow" />
+
+          {/* Footer */}
+          <div className="flex items-center justify-between mt-4">
+            <span className="text-xs text-gray-400 tracking-wide">
+              {getPostDate(post)}
+            </span>
+
+            <span
+              className="text-sm font-montserrat font-medium text-gold
+                         group-hover:translate-x-1 transition-transform"
+            >
+              Read More →
+            </span>
+          </div>
         </div>
-      </div>
+
+        {/* ================= CORNER DECOR ================= */}
+        <span
+          className="absolute top-4 right-4 w-8 h-8 border 
+                     border-gold/40 rounded-full opacity-0
+                     group-hover:opacity-100 transition"
+        />
+      </article>
     </Link>
   );
-};
-
-export default BlogCard;
+}

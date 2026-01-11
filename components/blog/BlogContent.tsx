@@ -1,4 +1,5 @@
 'use client';
+
 import { useState, useMemo } from "react";
 import { Post } from "@/types";
 import BlogContainer from "./BlogContainer";
@@ -8,102 +9,138 @@ interface Props {
   posts: Post[];
 }
 
-const BlogContent = ({ posts }: Props) => {
+const POSTS_PER_PAGE = 9;
+
+export default function BlogContent({ posts }: Props) {
   const [currentPage, setCurrentPage] = useState(1);
   const [selectedCategory, setSelectedCategory] = useState<string | null>(null);
-  const postsPerPage = 9;
 
-  // Extract unique categories from posts
+  /* =========================
+     UNIQUE CATEGORIES
+  ========================= */
   const uniqueCategories = useMemo(() => {
     const categories = new Set<string>();
     posts.forEach((post) => {
-      post.categories.forEach((category) => categories.add(category.title));
+      post.categories?.forEach((cat) => {
+        categories.add(cat.title);
+      });
     });
     return Array.from(categories);
   }, [posts]);
 
-  // Filter posts by selected category
+  /* =========================
+     FILTER POSTS
+  ========================= */
   const filteredPosts = selectedCategory
     ? posts.filter((post) =>
-        post.categories.some((category) => category.title === selectedCategory)
+        post.categories?.some(
+          (cat) => cat.title === selectedCategory
+        )
       )
     : posts;
 
-  const indexOfLastPost = currentPage * postsPerPage;
-  const indexOfFirstPost = indexOfLastPost - postsPerPage;
-  const currentPosts = filteredPosts.slice(indexOfFirstPost, indexOfLastPost);
-
-  const totalPages = Math.ceil(filteredPosts.length / postsPerPage);
-
-  const handlePageChange = (pageNumber: number) => {
-    setCurrentPage(pageNumber);
-  };
+  /* =========================
+     PAGINATION
+  ========================= */
+  const totalPages = Math.ceil(filteredPosts.length / POSTS_PER_PAGE);
+  const startIndex = (currentPage - 1) * POSTS_PER_PAGE;
+  const currentPosts = filteredPosts.slice(
+    startIndex,
+    startIndex + POSTS_PER_PAGE
+  );
 
   const handleCategoryClick = (category: string | null) => {
     setSelectedCategory(category);
-    setCurrentPage(1); // Reset to page 1 when a new category is selected
+    setCurrentPage(1);
   };
 
+  /* =========================
+     RENDER
+  ========================= */
   return (
-    <BlogContainer className="px-4 sm:px-10">
-      {/* Categories as clickable buttons */}
-      <div className="flex flex-wrap gap-2 mb-6">
-        <button
-          className={`px-4 py-2 rounded-lg ${
-            !selectedCategory ? "bg-orange-500 text-white" : "bg-gray-200"
-          }`}
-          onClick={() => handleCategoryClick(null)} // Show all posts
-        >
-          All
-        </button>
-        {uniqueCategories.map((category) => (
+    <BlogContainer className="padding-container">
+
+      {/* ================= CATEGORIES ================= */}
+      {uniqueCategories.length > 0 && (
+        <div className="flex flex-wrap justify-center gap-3 mb-14">
           <button
-            key={category}
-            className={`px-4 py-2 rounded-lg ${
-              selectedCategory === category ? "bg-orange-500 text-white" : "bg-gray-200"
-            }`}
-            onClick={() => handleCategoryClick(category)}
+            onClick={() => handleCategoryClick(null)}
+            className={`px-6 py-2 rounded-full font-montserrat text-sm transition
+              ${
+                !selectedCategory
+                  ? "gold-gradient text-white shadow-md"
+                  : "bg-white text-charcoal border border-gray-300 hover:border-gold"
+              }`}
           >
-            {category}
+            All
           </button>
-        ))}
-      </div>
 
-      {/* Blog Cards */}
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-        {currentPosts.map((post) => (
-          <BlogCard key={post?._id} post={post} />
-        ))}
-      </div>
+          {uniqueCategories.map((category) => (
+            <button
+              key={category}
+              onClick={() => handleCategoryClick(category)}
+              className={`px-6 py-2 rounded-full font-montserrat text-sm transition
+                ${
+                  selectedCategory === category
+                    ? "gold-gradient text-white shadow-md"
+                    : "bg-white text-charcoal border border-gray-300 hover:border-gold"
+                }`}
+            >
+              {category}
+            </button>
+          ))}
+        </div>
+      )}
 
-      {/* Pagination Controls */}
-      <div className="flex justify-between items-center mt-10">
-        <button
-          onClick={() => handlePageChange(currentPage - 1)}
-          className={`px-4 py-2 mx-1 rounded-lg text-white ${
-            currentPage === 1 ? "bg-gray-300" : "bg-orange-500 hover:bg-orange-400"
-          } transition-colors duration-200`}
-          disabled={currentPage === 1}
-        >
-          Back
-        </button>
-
-        <p className="text-gray-700 text-sm">
-          Page {currentPage} of {totalPages}
+      {/* ================= POSTS GRID ================= */}
+      {currentPosts.length > 0 ? (
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10">
+          {currentPosts.map((post) => (
+            <BlogCard key={post._id} post={post} />
+          ))}
+        </div>
+      ) : (
+        <p className="text-center text-gray-500 py-20">
+          No posts found.
         </p>
+      )}
 
-        <button
-          onClick={() => handlePageChange(currentPage + 1)}
-          className={`px-4 py-2 mx-1 rounded-lg text-white ${
-            currentPage === totalPages ? "bg-gray-300" : "bg-orange-500 hover:bg-orange-400"
-          } transition-colors duration-200`}
-          disabled={currentPage === totalPages}
-        >
-          Next
-        </button>
-      </div>
+      {/* ================= PAGINATION ================= */}
+      {totalPages > 1 && (
+        <div className="flex items-center justify-center gap-6 mt-20">
+
+          <button
+            onClick={() => setCurrentPage((p) => p - 1)}
+            disabled={currentPage === 1}
+            className={`px-6 py-2 rounded-full font-montserrat text-sm transition
+              ${
+                currentPage === 1
+                  ? "bg-gray-200 text-gray-400 cursor-not-allowed"
+                  : "bg-charcoal text-gold hover:text-white"
+              }`}
+          >
+            Previous
+          </button>
+
+          <span className="text-sm text-gray-600 font-medium">
+            Page {currentPage} of {totalPages}
+          </span>
+
+          <button
+            onClick={() => setCurrentPage((p) => p + 1)}
+            disabled={currentPage === totalPages}
+            className={`px-6 py-2 rounded-full font-montserrat text-sm transition
+              ${
+                currentPage === totalPages
+                  ? "bg-gray-200 text-gray-400 cursor-not-allowed"
+                  : "bg-charcoal text-gold hover:text-white"
+              }`}
+          >
+            Next
+          </button>
+
+        </div>
+      )}
     </BlogContainer>
   );
-};
-
-export default BlogContent;
+}

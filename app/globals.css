@@ -236,6 +236,49 @@ body {
   }
 }
 
+@layer base {
+  body {
+    font-family: Poppins, sans-serif;
+    @apply bg-offwhite text-charcoal antialiased;
+  }
+
+  .dark body {
+    @apply bg-bgDark text-white;
+  }
+}
+
+
+@layer components {
+  .blog-content {
+    @apply font-poppins text-charcoal leading-relaxed;
+  }
+
+  .blog-content h1,
+  .blog-content h2,
+  .blog-content h3 {
+    @apply font-montserrat text-gold font-semibold mt-10 mb-4;
+  }
+
+  .blog-content p {
+    @apply text-body mb-6;
+  }
+
+  .blog-content blockquote {
+    @apply border-l-4 border-gold pl-6 italic text-gray-600 my-8;
+  }
+
+  .blog-content a {
+    @apply text-gold underline hover:text-gold-dark transition;
+  }
+
+  .blog-content ul {
+    @apply list-disc pl-6 mb-6;
+  }
+
+  .blog-content img {
+    @apply rounded-xl my-10;
+  }
+}
 
 /* ======================================
    SCROLLBAR HIDE (ORIGINAL)
