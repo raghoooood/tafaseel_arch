@@ -1,5 +1,5 @@
-import { dataset, projectId , apiVersion} from "@/sanity/env";
 import { createClient } from "next-sanity";
+import { projectId, dataset, apiVersion } from "@/sanity/env";
 
 /* =========================
    SAFETY CHECK
