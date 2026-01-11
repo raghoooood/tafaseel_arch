@@ -3,12 +3,13 @@ import Image from "next/image";
 import { notFound } from "next/navigation";
 
 interface PageProps {
-  params: { slug: string };
+  params: Promise<{
+    slug: string;
+  }>;
 }
 
 /* ===============================
-   ✅ REQUIRED FOR STATIC EXPORT
-   Generates all project type pages
+   STATIC PARAMS
 ================================ */
 export function generateStaticParams() {
   return PROJECT_TYPES_DATA.map((type) => ({
@@ -19,8 +20,12 @@ export function generateStaticParams() {
 /* ===============================
    PAGE COMPONENT
 ================================ */
-export default function ProjectTypePage({ params }: PageProps) {
-  const project = PROJECT_TYPES_DATA.find((p) => p.slug === params.slug);
+export default async function ProjectTypePage({ params }: PageProps) {
+  const { slug } = await params; // ✅ REQUIRED IN NEXT 15
+
+  const project = PROJECT_TYPES_DATA.find(
+    (p) => p.slug === slug
+  );
 
   if (!project) return notFound();
 
