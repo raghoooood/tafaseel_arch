@@ -9,9 +9,9 @@ import { RichText } from "./RichText";
 import { Post } from "@/types";
 
 interface Props {
-  params: {
+  params: Promise<{
     slug: string;
-  };
+  }>;
 }
 
 export const revalidate = 30;
@@ -36,7 +36,9 @@ export async function generateStaticParams() {
 /* =========================
    PAGE
 ========================= */
-export default async function SlugPage({ params: { slug } }: Props) {
+export default async function SlugPage({ params }: Props) {
+  const { slug } = await params; // ✅ REQUIRED IN NEXT 15
+
   const query = groq`
     *[_type == "post" && slug.current == $slug][0]{
       _id,
@@ -44,7 +46,7 @@ export default async function SlugPage({ params: { slug } }: Props) {
       body,
       mainImage,
       publishedAt,
-      _updatedAt,
+      _createdAt,
       author->{
         name
       }
@@ -62,8 +64,7 @@ export default async function SlugPage({ params: { slug } }: Props) {
   }
 
   const displayDate =
-    post.publishedAt?.split("T")[0] ??
-    post._updatedAt?.split("T")[0];
+    post.publishedAt || post._createdAt;
 
   return (
     <section className="bg-offwhite py-20">
@@ -80,7 +81,14 @@ export default async function SlugPage({ params: { slug } }: Props) {
               {post.author?.name || "Tafaseel Team"}
             </span>
             <span className="mx-2 text-gold">•</span>
-            <span>{displayDate}</span>
+            <span>
+              {displayDate &&
+                new Date(displayDate).toLocaleDateString("en-US", {
+                  day: "numeric",
+                  month: "long",
+                  year: "numeric",
+                })}
+            </span>
           </div>
         </div>
 
