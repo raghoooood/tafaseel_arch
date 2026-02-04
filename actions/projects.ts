@@ -20,13 +20,31 @@ export const fetchProjectsByCategory = async (category: string = "All"): Promise
   queryParams.append("_start", "0");
   queryParams.append("_end", "50");
 
-  const res = await fetch(`https://tafaseel-project.onrender.com/api/v1/projects?${queryParams.toString()}`, {
+  const res = await fetch(`https://tafaseel-proj.onrender.com/api/v1/projects?${queryParams.toString()}`, {
     cache: "no-store", // always fetch fresh data
   });
 
   if (!res.ok) {
     throw new Error("Failed to fetch projects");
   }
+
+  const data: Project[] = await res.json();
+  return data;
+};
+
+export const fetchFeaturedProjects = async (): Promise<Project[]> => {
+  const queryParams = new URLSearchParams({
+    isFeatured: "true",
+    _start: "0",
+    _end: "50",
+  });
+
+  const res = await fetch(
+    `https://tafaseel-proj.onrender.com/api/v1/projects?${queryParams.toString()}`,
+    { cache: "no-store" }
+  );
+
+  if (!res.ok) throw new Error(`Failed to fetch featured projects: ${res.statusText}`);
 
   const data: Project[] = await res.json();
   return data;

@@ -9,6 +9,7 @@ import {
   FaPaintBrush, 
   FaRulerCombined 
 } from "react-icons/fa";
+import { fetchFeaturedProjects } from "@/actions/projects";
 
 /* =======================
 ✨ SERVICES DATA
@@ -35,9 +36,17 @@ const servicesData = [
 /* =======================
 ✨ SLIDER IMAGES — /public/images/exterior/
 ======================= */
-const sliderImages = Array.from({ length: 12 }, (_, i) =>
+/* const sliderImages = Array.from({ length: 12 }, (_, i) =>
   `/images/exterior/exterior-${i + 1}.png`
-);
+); */
+
+type FeaturedImage = {
+  _id: string;
+  imageUrl: string;
+};
+
+
+
 
 /* =======================
 ✨ ANIMATION VARIANTS
@@ -78,14 +87,55 @@ const floatCard: Variants = {
 const Guide = () => {
 
   const [current, setCurrent] = React.useState(0);
+  const [sliderImages, setSliderImages] = React.useState<FeaturedImage[]>([]);
+  const [loading, setLoading] = React.useState(true); 
+
+   React.useEffect(() => {
+  const fetchFeaturedImages = async () => {
+    try {
+      const data = await fetchFeaturedProjects(); // use the reusable function
+
+      const images: FeaturedImage[] = data
+        .flatMap((project: any, idx: number) => {
+          const projectImages = project.images?.projectImages || [];
+          if (projectImages.length < 3) return []; // skip if less than 3 images
+
+          // take the first 3 images
+          return projectImages.slice(0, 3).map((imgUrl: string, imgIdx: number) => ({
+            _id: `${project._id}-${imgIdx}`, // unique key
+            imageUrl: imgUrl,
+            projectTitle: project.title || `Project ${idx + 1}`,
+          }));
+        });
+
+      setSliderImages(images);
+    } catch (err) {
+      console.error("❌ Failed to fetch featured projects:", err);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  fetchFeaturedImages();
+}, []);
+
+
+
+
+
+
 
   /* ⏳ SLIDER SPEED = 7 seconds for luxury */
-  React.useEffect(() => {
-    const interval = setInterval(() => {
-      setCurrent((prev) => (prev + 1) % sliderImages.length);
-    }, 7000);
-    return () => clearInterval(interval);
-  }, []);
+ React.useEffect(() => {
+  if (!sliderImages.length) return;
+
+  const interval = setInterval(() => {
+    setCurrent(prev => (prev + 1) % sliderImages.length);
+  }, 7000);
+
+  return () => clearInterval(interval);
+}, [sliderImages.length]);
+
 
   /* Arrow Functions */
   const prevSlide = () => {
@@ -97,6 +147,7 @@ const Guide = () => {
     setCurrent((prev) => (prev + 1) % sliderImages.length);
   };
 
+  
   return (
     <section className="max-container padding-container w-full py-20">
 
@@ -216,7 +267,7 @@ const Guide = () => {
             rounded-3xl shadow-2xl
           "
         >
-          {sliderImages.map((src, index) => (
+          {sliderImages.map((img, index) => (
             <motion.div
               key={index}
               initial={{ opacity: 0, scale: 1.08 }}
@@ -228,13 +279,14 @@ const Guide = () => {
               className="absolute inset-0"
             >
               <Image
-                src={src}
-                alt={`exterior-${index}`}
-                fill
-                quality={100}
-                priority={index === 0}
-                className="object-cover"
-              />
+  src={img.imageUrl}
+  alt={`featured-exterior-${index}`}
+  fill
+  quality={100}
+  priority={index === 0}
+  className="object-cover"
+/>
+
             </motion.div>
           ))}
 
