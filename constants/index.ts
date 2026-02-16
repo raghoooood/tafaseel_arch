@@ -59,18 +59,12 @@ export const FEATURES = [
 export const SOCIALS = {
   title: "Social",
   links: [
-    {
-      icon: "/facebook.svg",
-      url: "https://facebook.com/Tafaseel", // change to your real link
-    },
+  
     {
       icon: "/instagram.svg",
       url: "https://www.instagram.com/tafaseel.architecture/", // change to your real link
     },
-    {
-      icon: "/twitter.svg",
-      url: "https://twitter.com/tafaseel", // change to your real link
-    },
+   
   ],
 };
 
